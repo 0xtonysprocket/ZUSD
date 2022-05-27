@@ -86,6 +86,7 @@ end
 @external
 func transfer{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         recipient : felt, amount : Uint256) -> (success : felt):
+    Pausable.assert_not_paused()
     ERC20.transfer(recipient, amount)
     return (TRUE)
 end
@@ -93,6 +94,7 @@ end
 @external
 func transferFrom{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         sender : felt, recipient : felt, amount : Uint256) -> (success : felt):
+    Pausable.assert_not_paused()
     ERC20.transfer_from(sender, recipient, amount)
     return (TRUE)
 end
@@ -100,6 +102,7 @@ end
 @external
 func approve{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         spender : felt, amount : Uint256) -> (success : felt):
+    Pausable.assert_not_paused()
     ERC20.approve(spender, amount)
     return (TRUE)
 end
@@ -107,6 +110,7 @@ end
 @external
 func increaseAllowance{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         spender : felt, added_value : Uint256) -> (success : felt):
+    Pausable.assert_not_paused()
     ERC20.increase_allowance(spender, added_value)
     return (TRUE)
 end
@@ -114,6 +118,7 @@ end
 @external
 func decreaseAllowance{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         spender : felt, subtracted_value : Uint256) -> (success : felt):
+    Pausable.assert_not_paused()
     ERC20.decrease_allowance(spender, subtracted_value)
     return (TRUE)
 end
@@ -137,6 +142,7 @@ end
 func mint{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         to : felt, amount : Uint256):
     Proxy.assert_only_admin()
+    Pausable.assert_not_paused()
     ERC20._mint(to, amount)
     return ()
 end
@@ -145,6 +151,7 @@ end
 func burn{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         user_from : felt, amount : Uint256):
     Proxy.assert_only_admin()
+    Pausable.assert_not_paused()
     ERC20._burn(user_from, amount)
     return ()
 end
