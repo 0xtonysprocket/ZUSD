@@ -9,8 +9,6 @@ from starkware.cairo.common.uint256 import Uint256
 
 from openzeppelin.token.erc20.library import ERC20
 
-from openzeppelin.access.ownable import Ownable
-
 from openzeppelin.security.pausable import Pausable
 
 from openzeppelin.upgrades.library import Proxy
@@ -122,14 +120,14 @@ end
 
 @external
 func pause{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
-    Ownable.assert_only_owner()
+    Proxy.assert_only_admin()
     Pausable._pause()
     return ()
 end
 
 @external
 func unpause{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
-    Ownable.assert_only_owner()
+    Proxy.assert_only_admin()
     Pausable._unpause()
     return ()
 end
@@ -138,7 +136,7 @@ end
 @external
 func mint{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         to : felt, amount : Uint256):
-    Ownable.assert_only_owner()
+    Proxy.assert_only_admin()
     ERC20._mint(to, amount)
     return ()
 end
@@ -146,7 +144,7 @@ end
 @external
 func burn{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         user_from : felt, amount : Uint256):
-    Ownable.assert_only_owner()
+    Proxy.assert_only_admin()
     ERC20._burn(user_from, amount)
     return ()
 end
